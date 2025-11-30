@@ -30,6 +30,8 @@ func main() {
 	router:= http.NewServeMux()
 
 	router.HandleFunc("POST /api/students", student.New(storage))
+	router.HandleFunc("GET /api/students/{id}", student.GetById(storage))
+	router.HandleFunc("GET /api/students", student.GetList(storage))
 	// setup server
 
 	server := http.Server{
@@ -53,7 +55,9 @@ func main() {
 	<-done
   slog.Info("Shutting down the server")
 	
-	ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
+
+ defer cancel()
  
  if err:= server.Shutdown(ctx);err != nil {
 	slog.Error("Failed to Shutdown server", slog.String("error", err.Error()))

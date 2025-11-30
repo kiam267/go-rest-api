@@ -6,3 +6,5 @@
 -  In the `[folder-name]` create  `main.go` file . 
 - RUN Command : ` go run cmd/[folder-name]/main.go`
 
+#### How run it 
+run this command `go run cmd/student-api/main.go -config config/local.yaml`
